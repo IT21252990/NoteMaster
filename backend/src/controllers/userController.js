@@ -90,7 +90,7 @@ const loginUser = asyncHandler(async (req, res) => {
   }
 });
 
-//@desc Current user details
+//@desc Get Current user details
 //@route /api/users/currentuser
 //@access private
 const currentuser = asyncHandler(async (req, res) => {
@@ -98,8 +98,26 @@ const currentuser = asyncHandler(async (req, res) => {
   res.json(user);
 });
 
+//@desc Get all user's details
+//@route /api/users/allusers
+//@access private
+const allUsers = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user.id);
+    if (!user || user.role !== "Admin") {
+        res.status(403);
+        throw new Error("Admin only have access for this Route");
+      } else {
+        const users = await User.find();
+        if (!users) {
+          throw new Error("No users available to show !");
+        }
+        res.status(200).json(users);
+      }
+  });
+
 module.exports = {
   registerUser,
   loginUser,
   currentuser,
+  allUsers
 };

@@ -1,74 +1,113 @@
 const asyncHandler = require("express-async-handler");
 
 const Note = require("../models/noteModel");
+const User = require("../models/userModel");
 
 //@desc Get All Notes
 //@route /api/notes/
-//@access public
+//@access private
 const getAllNotes = asyncHandler(async (req, res) => {
-  const notes = await Note.find();
-  res.status(200).json(notes);
+  const user = await User.findById(req.user.id);
+
+  if (!user || user.role !== "User") {
+    res.status(403);
+    throw new Error("Admin has not access for this Route");
+  } else {
+    const notes = await Note.find();
+    if (!notes) {
+      throw new Error("No Notes available to show !");
+    }
+    res.status(200).json(notes);
+  }
 });
 
 //@desc create a Note
 //@route /api/notes/
-//@access public
+//@access private
 const createNote = asyncHandler(async (req, res) => {
-  const { title, body, user } = req.body;
-  if (!title || !body || !user) {
-    res.status(404);
-    throw new Error(" All fields are required");
-  }
-  const note = await Note.create({
-    title,
-    body,
-    user,
-  });
+  const user = await User.findById(req.user.id);
 
-  res.status(201).json(note);
+  if (!user || user.role !== "User") {
+    res.status(403);
+    throw new Error("Admin has not access for this Route");
+  } else {
+    const { title, body, user } = req.body;
+    if (!title || !body || !user) {
+      res.status(404);
+      throw new Error(" All fields are required");
+    }
+    const note = await Note.create({
+      title,
+      body,
+      user,
+    });
+
+    res.status(201).json(note);
+  }
 });
 
 //@desc Update a Note
 //@route /api/notes/:id
-//@access public
+//@access private
 const updateNote = asyncHandler(async (req, res) => {
-  const note = await Note.findById(req.params.id);
-  if (!note) {
-    res.status(404);
-    throw new Error("Note not found");
-  }
+  const user = await User.findById(req.user.id);
 
-  const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-  });
-
-  res.status(200).json(updatedNote);
-});
-
-//@desc delete a Note
-//@route /api/notes/:id
-//@access public
-const deleteNote = asyncHandler(async (req, res) => {
-  const note = await Note.findById(req.params.id);
-  if (!note) {
-    res.status(404);
-    throw new Error("Note not found");
-  }
-
-  await Note.deleteOne();
-  res.status(200).json(note);
-});
-
-//@desc Get a single Note
-//@route /api/notes/:id
-//@access public
-const getNote = asyncHandler(async (req, res) => {
+  if (!user || user.role !== "User") {
+    res.status(403);
+    throw new Error("Admin has not access for this Route");
+  } else {
     const note = await Note.findById(req.params.id);
     if (!note) {
       res.status(404);
       throw new Error("Note not found");
     }
-  res.status(200).json(note);
+
+    const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(updatedNote);
+  }
+});
+
+//@desc delete a Note
+//@route /api/notes/:id
+//@access private
+const deleteNote = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user || user.role !== "User") {
+    res.status(403);
+    throw new Error("Admin has not access for this Route");
+  } else {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      res.status(404);
+      throw new Error("Note not found");
+    }
+
+    await Note.deleteOne();
+    res.status(200).json(note);
+  }
+});
+
+//@desc Get a single Note
+//@route /api/notes/:id
+//@access private
+const getNote = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id);
+
+  if (!user || user.role !== "User") {
+    res.status(403);
+    throw new Error("Admin has not access for this Route");
+  } else {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      res.status(404);
+      throw new Error("Note not found");
+    }
+    res.status(200).json(note);
+  }
 });
 
 module.exports = {
@@ -76,5 +115,5 @@ module.exports = {
   createNote,
   updateNote,
   deleteNote,
-  getNote
+  getNote,
 };
