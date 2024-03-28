@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const {getAllNotes} = require('../controllers/noteController');
+const {getAllNotes , createNote} = require('../controllers/noteController');
 
 router.get("/" , getAllNotes);
 
-// router.post("/" , createNote);
+router.post("/" , createNote);
 
 // router.get("/:id" , getNoteById);
 
