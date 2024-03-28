@@ -47,8 +47,24 @@ const updateNote = asyncHandler(async (req, res) => {
   res.status(200).json(updatedNote);
 });
 
+//@desc delete a Note
+//@route /api/notes/:id
+//@access public
+const deleteNote = asyncHandler(async (req, res) => {
+
+      const note = await Note.findById(req.params.id);
+      if (!note) {
+        res.status(404);
+        throw new Error("Note not found");
+      }
+  
+      await Note.deleteOne();
+      res.status(200).json(note);
+  });
+
 module.exports = {
   getAllNotes,
   createNote,
-  updateNote
+  updateNote,
+  deleteNote
 };
