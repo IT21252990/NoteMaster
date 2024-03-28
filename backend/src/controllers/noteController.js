@@ -28,9 +28,27 @@ const createNote = asyncHandler(async (req, res) => {
   res.status(201).json(note);
 });
 
+//@desc Update a Note
+//@route /api/notes/:id
+//@access public
+const updateNote = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id);
+  if (!note) {
+    res.status(404);
+    throw new Error("Note not found");
+  }
 
+  const updatedNote = await Note.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json(updatedNote);
+});
 
 module.exports = {
   getAllNotes,
   createNote,
+  updateNote
 };
