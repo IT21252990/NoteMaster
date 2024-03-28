@@ -38,11 +38,9 @@ const updateNote = asyncHandler(async (req, res) => {
     throw new Error("Note not found");
   }
 
-  const updatedNote = await Note.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
 
   res.status(200).json(updatedNote);
 });
@@ -51,20 +49,32 @@ const updateNote = asyncHandler(async (req, res) => {
 //@route /api/notes/:id
 //@access public
 const deleteNote = asyncHandler(async (req, res) => {
+  const note = await Note.findById(req.params.id);
+  if (!note) {
+    res.status(404);
+    throw new Error("Note not found");
+  }
 
-      const note = await Note.findById(req.params.id);
-      if (!note) {
-        res.status(404);
-        throw new Error("Note not found");
-      }
-  
-      await Note.deleteOne();
-      res.status(200).json(note);
-  });
+  await Note.deleteOne();
+  res.status(200).json(note);
+});
+
+//@desc Get a single Note
+//@route /api/notes/:id
+//@access public
+const getNote = asyncHandler(async (req, res) => {
+    const note = await Note.findById(req.params.id);
+    if (!note) {
+      res.status(404);
+      throw new Error("Note not found");
+    }
+  res.status(200).json(note);
+});
 
 module.exports = {
   getAllNotes,
   createNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  getNote
 };

@@ -6,10 +6,10 @@ const app = express();
 connectToDB();
 app.use(express.json());
 
-
+const userRoutes = require('./src/routes/userRoutes');
 const noteRoutes = require('./src/routes/noteRoutes');
 
-
+app.use("/api/users" , userRoutes);
 app.use("/api/notes" , noteRoutes);
 
 
