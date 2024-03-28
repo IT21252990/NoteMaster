@@ -6,6 +6,13 @@ const app = express();
 connectToDB();
 app.use(express.json());
 
+
+const noteRoutes = require('./src/routes/noteRoutes');
+
+
+app.use("/api/notes" , noteRoutes);
+
+
 const port = process.env.PORT || 5000;
 
 app.listen(port ,  () => {
