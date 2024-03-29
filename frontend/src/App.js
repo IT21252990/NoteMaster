@@ -1,9 +1,20 @@
+import { BrowserRouter , Routes , Route } from "react-router-dom"
+import React from "react";
+
+import WellcomePage from "./pages/wellcomePage";
 
 function App() {
   return (
-    <h1 className="justify-center text-3xl font-bold underline align-middle pl-[300px]">
-      Hello world!
-    </h1>
+    <div className="w-screen h-screen">
+      <BrowserRouter>
+        <Routes>
+          <Route 
+            path="/"
+            element = {<WellcomePage/>}
+          />
+        </Routes>
+      </BrowserRouter>
+    </div>
   )
 }
 
