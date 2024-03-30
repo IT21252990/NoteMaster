@@ -17,10 +17,10 @@ const LoginPage = () => {
             <img
               className="mx-auto h-24 w-auto"
               src={logo}
-              alt="Your Company"
+              alt="Note Master"
             />
             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-              Sign in to your account
+              Sign in to your Account
             </h2>
           </div>
   
@@ -68,6 +68,9 @@ const LoginPage = () => {
               <div>
                 <button
                   type="submit"
+                  onClick={() => {
+                    navigate("/home");
+                  }}
                   className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                   Sign in
