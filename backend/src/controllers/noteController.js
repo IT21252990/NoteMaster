@@ -31,8 +31,8 @@ const createNote = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("Admin has not access for this Route");
   } else {
-    const { title, body, user } = req.body;
-    if (!title || !body || !user) {
+    const { title, body } = req.body;
+    if (!title || !body) {
       res.status(404);
       throw new Error(" All fields are required");
     }
