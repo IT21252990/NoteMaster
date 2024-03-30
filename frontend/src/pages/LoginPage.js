@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+
 import logo from "../images/Note Master Logo.png";
 
 
 const LoginPage = () => {
+
+    const navigate = useNavigate();
+
+
     return (
       <>
         <div className=" bg-[#FFE6C7] flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -66,6 +73,17 @@ const LoginPage = () => {
                   Sign in
                 </button>
               </div>
+              <div>
+                  <button
+                    type="reset"
+                    onClick={() => {
+                        navigate("/");
+                      }}
+                    className="flex w-full justify-center rounded-md bg-[#454545] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#807f7f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Cancel
+                  </button>
+                </div>
             </form>
   
             <p className="mt-10 text-center text-sm text-[#454545]">
