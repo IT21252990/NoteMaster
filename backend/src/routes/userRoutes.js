@@ -1,18 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const {registerUser , loginUser, currentuser , allUsers} = require('../controllers/userController');
-const validateToken = require('../middlewares/validateTokenHandler');
+const express = require('express')
 
-//Register a new user
-router.post("/register" , registerUser);
+// controller functions
+const { loginUser, signupUser } = require('../controllers/userController')
 
-//Login a user
-router.post("/login" , loginUser);
+const router = express.Router()
 
-//Get the current user
-router.get("/currentuser" ,validateToken, currentuser);
+// login route
+router.post('/login', loginUser)
 
-//get the all users
-router.get("/allusers" ,validateToken, allUsers);
+// signup route
+router.post('/register', signupUser)
 
-module.exports = router;
+module.exports = router

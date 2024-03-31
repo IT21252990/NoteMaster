@@ -1,114 +1,107 @@
-const asyncHandler = require("express-async-handler");
-
 const Note = require("../models/noteModel");
-const User = require("../models/userModel");
+const mongoose = require('mongoose');
 
 //@desc Get All Notes
 //@route /api/notes/
 //@access private
-const getAllNotes = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+const getAllNotes = async (req, res) => {
+  const user_id = req.user._id;
 
-  if (!user || user.role !== "User") {
-    res.status(403);
-    throw new Error("Admin has not access for this Route");
-  } else {
-    const notes = await Note.find();
-    if (!notes) {
-      throw new Error("No Notes available to show !");
-    }
-    res.status(200).json(notes);
-  }
-});
+  const notes = await Note.find({ user_id }).sort({ createdAt: -1 });
+
+  res.status(200).json(notes);
+};
 
 //@desc create a Note
 //@route /api/notes/
 //@access private
-const createNote = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+const createNote = async (req, res) => {
+  const { title, body } = req.body;
 
-  if (!user || user.role !== "User") {
-    res.status(403);
-    throw new Error("Admin has not access for this Route");
-  } else {
-    const { title, body } = req.body;
-    if (!title || !body) {
-      res.status(404);
-      throw new Error(" All fields are required");
-    }
-    const note = await Note.create({
-      title,
-      body,
-      user,
-    });
+  let emptyFields = [];
 
-    res.status(201).json(note);
+  if (!title) {
+    emptyFields.push("title");
   }
-});
+  if (!body) {
+    emptyFields.push("body");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please fill in all the fields", emptyFields });
+  }
+
+  // add doc to db
+  try {
+    const user_id = req.user._id;
+    const note = await Note.create({ title, body, user_id });
+    res.status(200).json(note);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 //@desc Update a Note
 //@route /api/notes/:id
 //@access private
-const updateNote = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+const updateNote = async (req, res) => {
+  const { id } = req.params
 
-  if (!user || user.role !== "User") {
-    res.status(403);
-    throw new Error("Admin has not access for this Route");
-  } else {
-    const note = await Note.findById(req.params.id);
-    if (!note) {
-      res.status(404);
-      throw new Error("Note not found");
-    }
-
-    const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-
-    res.status(200).json(updatedNote);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such Note'})
   }
-});
+
+  const note = await Note.findOneAndUpdate({_id: id}, {
+    ...req.body
+  })
+
+  if (!note) {
+    return res.status(400).json({error: 'No such Note'})
+  }
+
+  res.status(200).json(note)
+}
 
 //@desc delete a Note
 //@route /api/notes/:id
 //@access private
-const deleteNote = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+// delete a workout
+const deleteNote = async (req, res) => {
+  const { id } = req.params
 
-  if (!user || user.role !== "User") {
-    res.status(403);
-    throw new Error("Admin has not access for this Route");
-  } else {
-    const note = await Note.findById(req.params.id);
-    if (!note) {
-      res.status(404);
-      throw new Error("Note not found");
-    }
-
-    await Note.deleteOne();
-    res.status(200).json(note);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({error: 'No such Note'})
   }
-});
+
+  const note = await Note.findOneAndDelete({_id: id})
+
+  if (!note) {
+    return res.status(400).json({error: 'No such Note'})
+  }
+
+  res.status(200).json(note)
+}
 
 //@desc Get a single Note
 //@route /api/notes/:id
 //@access private
-const getNote = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
+// get a single workout
+const getNote = async (req, res) => {
+  const { id } = req.params;
 
-  if (!user || user.role !== "User") {
-    res.status(403);
-    throw new Error("Admin has not access for this Route");
-  } else {
-    const note = await Note.findById(req.params.id);
-    if (!note) {
-      res.status(404);
-      throw new Error("Note not found");
-    }
-    res.status(200).json(note);
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "No such Note" });
   }
-});
+
+  const note = await Note.findById(id);
+
+  if (!note) {
+    return res.status(404).json({ error: "No such Note" });
+  }
+
+  res.status(200).json(note);
+};
 
 module.exports = {
   getAllNotes,

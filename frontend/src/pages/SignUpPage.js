@@ -6,7 +6,6 @@ import { useSignup } from "../hooks/useSignup";
 import logo from "../images/Note Master Logo.png";
 
 const SignUpPage = () => {
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signup, error, isLoading } = useSignup();
@@ -14,9 +13,7 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(username, email, password);
-
-    await signup(username, email, password);
+    await signup(email, password);
   };
 
   const navigate = useNavigate();
@@ -31,30 +28,11 @@ const SignUpPage = () => {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-32 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
-            action="#"
-            method="POST"
             onSubmit={handleSubmit}
           >
-            <div>
-              <label className="block text-sm font-medium leading-6 text-black">
-                User name :
-              </label>
-              <div className="mt-2">
-                <input
-                  id="username"
-                  name="username"
-                  type="text"
-                  onChange={(e) => setUsername(e.target.value)} 
-                  value={username} 
-                  autoComplete="text"
-                  required
-                  className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#454545] sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
             <div>
               <label
                 htmlFor="email"
@@ -100,12 +78,13 @@ const SignUpPage = () => {
             </div>
             <div>
               <button
-                type="submit"
+                disabled={isLoading}
                 className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign Up
               </button>
             </div>
+            {error && <div className="error">{error}</div>}
             <div>
               <button
                 type="reset"

@@ -31,8 +31,6 @@ const LoginPage = () => {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form
             className="space-y-6"
-            action="#"
-            method="POST"
             onSubmit={handleSubmit}
           >
             <div>
@@ -64,14 +62,6 @@ const LoginPage = () => {
                 >
                   Password :
                 </label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-[#FF6000] hover:text-[#FFA559]"
-                  >
-                    Forgot password?
-                  </a>
-                </div>
               </div>
               <div className="mt-2">
                 <input
@@ -90,13 +80,12 @@ const LoginPage = () => {
             <div>
               <button
                 type="submit"
-                onClick={() => {
-                  navigate("/home");
-                }}
+                disabled={isLoading}
                 className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Sign in
               </button>
+              {error && <div className="error">{error}</div>}
             </div>
             <div>
               <button

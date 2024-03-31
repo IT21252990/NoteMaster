@@ -1,5 +1,6 @@
 import React , { useEffect } from "react";
 import { useNotesContext } from "../hooks/useNotesContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
@@ -7,7 +8,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import logo from "../images/Note Master Logo.png";
 
-import NavBar from "../components/navBar";
+import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import CreateNewNote from "../components/CreateNewNote";
 import NoteCard from "../components/NoteCard";
@@ -15,19 +16,24 @@ import NoteCard from "../components/NoteCard";
 const Home = () => {
 
     const { notes, dispatch } = useNotesContext();
+    const {user} = useAuthContext()
 
     useEffect(() => {
-        const fetchNotes = async () => {
-          const response = await fetch('/api/notes');
-          const json = await response.json();
-    
-          if (response.ok) {
-            dispatch({type: 'SET_NOTES', payload: json});
-          }
+      const fetchNotes = async () => {
+        const response = await fetch('/api/notes', {
+          headers: {'Authorization': `Bearer ${user.token}`},
+        })
+        const json = await response.json()
+  
+        if (response.ok) {
+          dispatch({type: 'SET_NOTES', payload: json})
         }
-    
-        fetchNotes();
-      }, [dispatch])
+      }
+  
+      if (user) {
+        fetchNotes()
+      }
+    }, [dispatch, user])
 
   const [open, setOpen] = useState(false);
 
