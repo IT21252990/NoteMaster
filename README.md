@@ -59,10 +59,10 @@ NoteMaster is a simple note-taking application built using Node.js, Express, Rea
     MONGODB_CONNECTION_STRING= <YOUR_MONGODB_CONNECTION_STRING_HERE>
     SECRET= <YOUR_SECRET_KEY_HERE>
     ```
-Replace <YOUR_MONGODB_CONNECTION_STRING_HERE> with your actual database connection string and <YOUR_SECRET_KEY_HERE> with the secret key for JWT authorization.
+-Replace <YOUR_MONGODB_CONNECTION_STRING_HERE> with your actual database connection string and <YOUR_SECRET_KEY_HERE> with the secret key for JWT authorization.
 5. Start the backend:
     ```bash
-    npm start
+    npm run dev
     ```
 
 ### Database Setup
