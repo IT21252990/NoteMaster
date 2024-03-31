@@ -1,59 +1,54 @@
-import React , { useState }  from "react";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState } from "react";
 import { useNotesContext } from "../hooks/useNotesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Swal from "sweetalert2";
 
+const CreateNewNote = ({ handleCancel }) => {
+  const { dispatch } = useNotesContext();
+  const { user } = useAuthContext();
 
-const CreateNewNote = ({ open, setOpen, handleCancel }) => {
-  const navigate = useNavigate();
-
-  const { dispatch } = useNotesContext()
-  const { user } = useAuthContext()
-
-  const [title, setTitle] = useState('')
-  const [body, setBody] = useState('')
-  const [error, setError] = useState(null)
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!user) {
-      setError('You must be logged in')
-      return
+      setError("You must be logged in");
+      return;
     }
 
-    const note = {title, body}
+    const note = { title, body };
 
-    const response = await fetch('/api/notes', {
-      method: 'POST',
+    const response = await fetch("/api/notes", {
+      method: "POST",
       body: JSON.stringify(note),
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
-      }
-    })
-    const json = await response.json()
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    const json = await response.json();
 
     if (!response.ok) {
-      setError(json.error)
+      setError(json.error);
     }
     if (response.ok) {
-      setTitle('')
-      setBody('')
-      setError(null)
-      dispatch({type: 'CREATE_NOTE', payload: json})
+      setTitle("");
+      setBody("");
+      setError(null);
+      dispatch({ type: "CREATE_NOTE", payload: json });
       handleCancel();
-       // Display success message using SweetAlert2
-       Swal.fire({
+      // Display success message using SweetAlert2
+      Swal.fire({
         icon: "success",
         title: "Success!",
         text: "New Note Added successfully",
         confirmButtonColor: "#FF6000",
       });
     }
-  }
+  };
 
   return (
     <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -71,7 +66,7 @@ const CreateNewNote = ({ open, setOpen, handleCancel }) => {
               name="title"
               type="text"
               onChange={(e) => setTitle(e.target.value)}
-        value={title}
+              value={title}
               autoComplete="text"
               required
               className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#454545] sm:text-sm sm:leading-6"
@@ -89,20 +84,17 @@ const CreateNewNote = ({ open, setOpen, handleCancel }) => {
               name="description"
               type="text"
               onChange={(e) => setBody(e.target.value)}
-        value={body}
+              value={body}
               autoComplete="text"
               required
-              style={{ height: '180px' }}
+              style={{ height: "180px" }}
               className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#454545] sm:text-sm sm:leading-6"
             />
           </div>
         </div>
-       
 
         <div>
-          <button
-            className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
+          <button className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Create Note
           </button>
           {error && <div className="font-semibold text-red-600">{error}</div>}
@@ -111,8 +103,8 @@ const CreateNewNote = ({ open, setOpen, handleCancel }) => {
           <button
             type="reset"
             onClick={() => {
-                handleCancel();
-              }}
+              handleCancel();
+            }}
             className="flex w-full justify-center rounded-md bg-[#454545] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#807f7f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Cancel

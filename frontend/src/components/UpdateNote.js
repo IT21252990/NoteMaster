@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Transition } from "@headlessui/react";
 import { useNotesContext } from "../hooks/useNotesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import Swal from "sweetalert2";
@@ -9,8 +7,6 @@ const UpdateNote = ({ note, handleCancel }) => {
   const [updatedTitle, setUpdatedTitle] = useState(note.title);
   const [updatedBody, setUpdatedBody] = useState(note.body);
   const [error, setError] = useState(null);
-
-  const navigate = useNavigate();
 
   const { dispatch } = useNotesContext();
   const { user } = useAuthContext();

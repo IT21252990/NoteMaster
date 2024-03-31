@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 import logo from "../images/Note Master Logo.png";
 import userIcon from "../images/userIcon.png";
@@ -21,18 +21,14 @@ const NavBar = () => {
 
     // Show success message if logout was successful
     Swal.fire({
-      icon: 'success',
-      title: 'Logout Successful!',
-      text: 'You have successfully logged out.',
-      confirmButtonColor: '#3085d6',
+      icon: "success",
+      title: "Logout Successful!",
+      text: "You have successfully logged out.",
+      confirmButtonColor: "#3085d6",
     }).then(() => {
-      navigate('/login'); // Redirect to login page after logout
+      navigate("/login");
     });
   };
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
 
   return (
     <div>
@@ -95,7 +91,6 @@ const NavBar = () => {
                   </div>
                 </div>
                 <div className="flex -mr-2 md:hidden">
-                  {/* Mobile menu button */}
                   <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md bg-[#454545] p-2 text-gray-400 hover:bg-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>

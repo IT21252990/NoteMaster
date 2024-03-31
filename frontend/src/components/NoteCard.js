@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { useNotesContext } from "../hooks/useNotesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 import { Fragment } from "react";
 import { Dialog } from "@headlessui/react";
@@ -27,13 +26,13 @@ const NoteCard = ({ note }) => {
 
     // Display confirmation message using SweetAlert2
     const confirmResult = await Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#FFA559',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#FFA559",
+      confirmButtonText: "Yes, delete it!",
     });
 
     if (confirmResult.isConfirmed) {

@@ -10,15 +10,11 @@ import whypic from "../images/Why Note Master.png";
 
 const LearnMore = () => {
   const navigate = useNavigate();
-  const navigation = [
-    { name: "Register", href: "#" },
-    { name: "Login", href: "#" },
-  ];
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <div className="bg-[#FFE6C7] h-screen">
-      <div className=" hidden lg:flex md:flex relative gap-x-6 items-end justify-end right-10 pt-5">
+      <div className="relative items-end justify-end hidden pt-5 lg:flex md:flex gap-x-6 right-10">
         <a
           href="/signup"
           className="rounded-md bg-[#FF6000] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFA559] hover:text-black hover:font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -32,14 +28,14 @@ const LearnMore = () => {
           Login
         </a>
       </div>
-      <div className=" relative flex lg:hidden md:hidden items-end justify-end right-10 pt-5">
+      <div className="relative flex items-end justify-end pt-5 lg:hidden md:hidden right-10">
         <button
           type="button"
           className="inline-flex rounded-md p-2.5 text-[#454545]"
           onClick={() => setMobileMenuOpen(true)}
         >
           <span className="sr-only">Open main menu</span>
-          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          <Bars3Icon className="w-6 h-6" aria-hidden="true" />
         </button>
       </div>
       <Dialog
@@ -57,9 +53,9 @@ const LearnMore = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <XMarkIcon className="w-6 h-6" aria-hidden="true" />
             </button>
-            <div className=" flex relative gap-x-6 items-end justify-end right-5 pt-1">
+            <div className="relative flex items-end justify-end pt-1 gap-x-6 right-5">
               <a
                 href="/signup"
                 className="rounded-md bg-[#FF6000] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFA559] hover:text-black hover:font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -76,8 +72,8 @@ const LearnMore = () => {
           </div>
         </Dialog.Panel>
       </Dialog>
-      <div className="relative isolate px-6 pt-0 lg:px-8 mx-auto max-w-2xl flex">
-        <div className="sm:mb-8 flex justify-center">
+      <div className="relative flex max-w-2xl px-6 pt-0 mx-auto isolate lg:px-8">
+        <div className="flex justify-center sm:mb-8">
           <img
             className="h-[200px] w-[200px]"
             src={logo}
@@ -93,13 +89,13 @@ const LearnMore = () => {
       </div>
 
       <div className="relative isolate overflow-hidden mt-10 bg-[#454545] py-12 sm:py-18 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+        <div className="px-6 mx-auto max-w-7xl lg:px-8">
+          <div className="grid max-w-2xl grid-cols-1 mx-auto gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div className="max-w-xl lg:max-w-lg">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Welcome to Note Master.
               </h2>
-              <p className="mt-4 text-lg leading-8 text-gray-300 justify-center">
+              <p className="justify-center mt-4 text-lg leading-8 text-gray-300">
                 Welcome to Note Master, your personal assistant for organizing
                 your thoughts, ideas, and to-dos effortlessly. Whether you're a
                 busy professional, a diligent student, or simply someone who
@@ -120,7 +116,7 @@ const LearnMore = () => {
           </div>
         </div>
         <div
-          className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+          className="absolute top-0 -translate-x-1/2 left-1/2 -z-10 blur-3xl xl:-top-6"
           aria-hidden="true"
         >
           <div
@@ -134,8 +130,8 @@ const LearnMore = () => {
       </div>
 
       <div className="relative isolate overflow-hidden bg-[#FFA559] py-12 sm:py-18 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+        <div className="px-6 mx-auto max-w-7xl lg:px-8">
+          <div className="grid max-w-2xl grid-cols-1 mx-auto gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div>
               <img
                 className="h-[300px] w-[400px] ml-30"
@@ -167,7 +163,7 @@ const LearnMore = () => {
           </div>
         </div>
         <div
-          className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+          className="absolute top-0 -translate-x-1/2 left-1/2 -z-10 blur-3xl xl:-top-6"
           aria-hidden="true"
         >
           <div
@@ -181,13 +177,13 @@ const LearnMore = () => {
       </div>
 
       <div className="relative isolate overflow-hidden bg-[#454545] py-12 sm:py-18 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+        <div className="px-6 mx-auto max-w-7xl lg:px-8">
+          <div className="grid max-w-2xl grid-cols-1 mx-auto gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div className="max-w-xl lg:max-w-lg">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                 Why Note Master?
               </h2>
-              <p className="mt-4 text-lg leading-8 text-gray-300 justify-center">
+              <p className="justify-center mt-4 text-lg leading-8 text-gray-300">
                 Note Master isn't just another note-taking app; it's your
                 digital companion designed to empower you to capture, organize,
                 and manage your thoughts seamlessly. Say goodbye to scattered
@@ -208,7 +204,7 @@ const LearnMore = () => {
           </div>
         </div>
         <div
-          className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+          className="absolute top-0 -translate-x-1/2 left-1/2 -z-10 blur-3xl xl:-top-6"
           aria-hidden="true"
         >
           <div
@@ -223,14 +219,15 @@ const LearnMore = () => {
       <div className="relative isolate overflow-hidden bg-[#FF6000] py-12 sm:py-18 lg:py-20">
         <div className="ml-20">
           <h2 className="text-3xl font-bold text-black sm:text-4xl">
-          Join Us:
+            Join Us:
           </h2>
           <p className="mt-4 text-lg leading-8 text-blackjustify-center">
-          Ready to revolutionize the way you take notes? Sign up or log in now and start mastering your notes today!
+            Ready to revolutionize the way you take notes? Sign up or log in now
+            and start mastering your notes today!
           </p>
         </div>
         <div
-          className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+          className="absolute top-0 -translate-x-1/2 left-1/2 -z-10 blur-3xl xl:-top-6"
           aria-hidden="true"
         >
           <div
@@ -243,17 +240,20 @@ const LearnMore = () => {
         </div>
       </div>
       <div className="relative isolate overflow-hidden bg-[#454545] py-12 sm:py-18 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+        <div className="px-6 mx-auto max-w-7xl lg:px-8">
+          <div className="grid max-w-2xl grid-cols-1 mx-auto gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
             <div className="max-w-xl lg:max-w-lg">
               <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Get Started:
+                Get Started:
               </h2>
-              <p className="mt-4 text-lg leading-8 text-gray-300 justify-center">
-              If you're new here, click on the "Register" button to create your Note Master account. If you're already a part of our community, simply log in to access your notes and pick up where you left off.
+              <p className="justify-center mt-4 text-lg leading-8 text-gray-300">
+                If you're new here, click on the "Register" button to create
+                your Note Master account. If you're already a part of our
+                community, simply log in to access your notes and pick up where
+                you left off.
               </p>
             </div>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className="flex items-center justify-center mt-10 gap-x-6">
               <a
                 href="/signup"
                 className="rounded-md bg-[#FF6000] px-3.5 py-2.5 text-3xl font-semibold text-white shadow-sm hover:bg-[#FFA559] hover:text-black hover:font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
@@ -264,7 +264,7 @@ const LearnMore = () => {
           </div>
         </div>
         <div
-          className="absolute left-1/2 top-0 -z-10 -translate-x-1/2 blur-3xl xl:-top-6"
+          className="absolute top-0 -translate-x-1/2 left-1/2 -z-10 blur-3xl xl:-top-6"
           aria-hidden="true"
         >
           <div

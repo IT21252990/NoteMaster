@@ -153,12 +153,20 @@ const Home = () => {
 
             <main>
               <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="grid max-w-2xl grid-cols-1 mx-auto border-t border-gray-200 gap-x-8 gap-y-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                  {notes &&
-                    notes.map((note) => (
-                      <NoteCard note={note} key={note._id} />
-                    ))}
-                </div>
+                {notes && notes.length === 0 ? (
+                  <div className="justify-center mt-48 text-center">
+                    <p className="mt-4 text-lg italic font-bold text-black">
+                      no notes to show! click create a new note button to add your first note.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid max-w-2xl grid-cols-1 mx-auto border-t border-gray-200 gap-x-8 gap-y-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                    {notes &&
+                      notes.map((note) => (
+                        <NoteCard note={note} key={note._id} />
+                      ))}
+                  </div>
+                )}
               </div>
             </main>
           </div>

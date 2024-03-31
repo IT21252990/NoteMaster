@@ -1,5 +1,5 @@
 const Note = require("../models/noteModel");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 //@desc Get All Notes
 //@route /api/notes/
@@ -46,42 +46,45 @@ const createNote = async (req, res) => {
 //@route /api/notes/:id
 //@access private
 const updateNote = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such Note'})
+    return res.status(404).json({ error: "No such Note" });
   }
 
-  const note = await Note.findOneAndUpdate({_id: id}, {
-    ...req.body
-  })
+  const note = await Note.findOneAndUpdate(
+    { _id: id },
+    {
+      ...req.body,
+    }
+  );
 
   if (!note) {
-    return res.status(400).json({error: 'No such Note'})
+    return res.status(400).json({ error: "No such Note" });
   }
 
-  res.status(200).json(note)
-}
+  res.status(200).json(note);
+};
 
 //@desc delete a Note
 //@route /api/notes/:id
 //@access private
 // delete a workout
 const deleteNote = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({error: 'No such Note'})
+    return res.status(404).json({ error: "No such Note" });
   }
 
-  const note = await Note.findOneAndDelete({_id: id})
+  const note = await Note.findOneAndDelete({ _id: id });
 
   if (!note) {
-    return res.status(400).json({error: 'No such Note'})
+    return res.status(400).json({ error: "No such Note" });
   }
 
-  res.status(200).json(note)
-}
+  res.status(200).json(note);
+};
 
 //@desc Get a single Note
 //@route /api/notes/:id
