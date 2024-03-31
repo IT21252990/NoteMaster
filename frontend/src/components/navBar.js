@@ -1,7 +1,8 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Swal from 'sweetalert2';
 
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
@@ -13,9 +14,20 @@ import userIcon from "../images/userIcon.png";
 const NavBar = () => {
   const { logout } = useLogout();
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const handleClick = () => {
     logout();
+
+    // Show success message if logout was successful
+    Swal.fire({
+      icon: 'success',
+      title: 'Logout Successful!',
+      text: 'You have successfully logged out.',
+      confirmButtonColor: '#3085d6',
+    }).then(() => {
+      navigate('/login'); // Redirect to login page after logout
+    });
   };
 
   function classNames(...classes) {
@@ -43,7 +55,9 @@ const NavBar = () => {
                 </div>
                 <div className="hidden md:block">
                   <div className="flex items-center ml-4 md:ml-6">
-                    {/* Profile dropdown */}
+                    <div className="text-sm font-medium leading-none text-black">
+                      {user.email}
+                    </div>
                     <Menu as="div" className="relative ml-3">
                       <div>
                         <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-[#454545] text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#454545]">
@@ -65,18 +79,11 @@ const NavBar = () => {
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                          <div className="ml-3">
-                    <div className="text-sm font-medium leading-none text-black">
-                      {user.email}
-                    </div>
-                  </div>
-                          </Menu.Item>
+                        <Menu.Items className="absolute right-0 z-10 w-48 py-1 mt-1 origin-top-right bg-red-500 rounded-md shadow-2xl hover:bg-red-700 ring-2 ring-red-800 focus:outline-none">
                           <Menu.Item>
                             <a
                               href="/login"
-                              className="block px-4 py-2 text-sm text-black"
+                              className="block px-2 py-2 ml-14 text-[12px] font-bold text-white"
                               onClick={handleClick}
                             >
                               Sign out
@@ -93,15 +100,9 @@ const NavBar = () => {
                     <span className="absolute -inset-0.5" />
                     <span className="sr-only">Open main menu</span>
                     {open ? (
-                      <XMarkIcon
-                        className="block w-6 h-6"
-                        aria-hidden="true"
-                      />
+                      <XMarkIcon className="block w-6 h-6" aria-hidden="true" />
                     ) : (
-                      <Bars3Icon
-                        className="block w-6 h-6"
-                        aria-hidden="true"
-                      />
+                      <Bars3Icon className="block w-6 h-6" aria-hidden="true" />
                     )}
                   </Disclosure.Button>
                 </div>
@@ -120,7 +121,7 @@ const NavBar = () => {
                   </div>
                 </div>
                 <div className="px-2 mt-3 space-y-1">
-                <div className="ml-3">
+                  <div className="ml-3">
                     <div className="text-sm font-medium leading-none text-black">
                       {user.email}
                     </div>

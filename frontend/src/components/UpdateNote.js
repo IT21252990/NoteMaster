@@ -1,53 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Transition } from '@headlessui/react';
+import { Transition } from "@headlessui/react";
 import { useNotesContext } from "../hooks/useNotesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Swal from "sweetalert2";
 
-const UpdateNote = ({ note , handleCancel }) => {
+const UpdateNote = ({ note, handleCancel }) => {
   const [updatedTitle, setUpdatedTitle] = useState(note.title);
   const [updatedBody, setUpdatedBody] = useState(note.body);
-  const [error, setError] = useState(null)
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  const { dispatch } = useNotesContext()
-  const { user } = useAuthContext()
+  const { dispatch } = useNotesContext();
+  const { user } = useAuthContext();
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-  
+
     if (!user) {
-      setError('You must be logged in');
+      setError("You must be logged in");
       return;
     }
-  
+
     const updatedNote = { ...note, title: updatedTitle, body: updatedBody };
-  
+
     const response = await fetch("/api/notes/" + note._id, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify(updatedNote),
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${user.token}`
-      }
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
     });
 
     const json = await response.json();
-  
+
     if (!response.ok) {
-      setError('Failed to update note');
+      setError("Failed to update note");
       return;
     }
 
     if (response.ok) {
-        dispatch({ type: 'UPDATE_NOTE', payload: json });
-        handleCancel();
-      }
-  
-     window.location.reload();
+      dispatch({ type: "UPDATE_NOTE", payload: json });
+      handleCancel();
+      // Display success message using SweetAlert2
+      Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "Note updated successfully",
+        confirmButtonColor: "#FF6000",
+      });
+    }
+
+    window.location.reload();
   };
-  
 
   return (
     <div className="mt-1 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -65,7 +72,7 @@ const UpdateNote = ({ note , handleCancel }) => {
               name="title"
               type="text"
               onChange={(e) => setUpdatedTitle(e.target.value)}
-        value={updatedTitle}
+              value={updatedTitle}
               autoComplete="text"
               required
               className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#454545] sm:text-sm sm:leading-6"
@@ -83,28 +90,25 @@ const UpdateNote = ({ note , handleCancel }) => {
               name="description"
               type="text"
               onChange={(e) => setUpdatedBody(e.target.value)}
-        value={updatedBody}
+              value={updatedBody}
               autoComplete="text"
               required
-              style={{ height: '180px' }}
+              style={{ height: "180px" }}
               className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#454545] sm:text-sm sm:leading-6"
             />
           </div>
         </div>
-       
 
         <div>
-          <button
-            className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-           Save Updates
+          <button className="flex w-full justify-center rounded-md bg-[#FF6000] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#FFA559] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Save Updates
           </button>
-          {error && <div className="error">{error}</div>}
+          {error && <div className="font-semibold text-red-600">{error}</div>}
         </div>
         <div>
           <button
-            type="button" 
-            onClick={handleCancel} 
+            type="button"
+            onClick={handleCancel}
             className="flex w-full justify-center rounded-md bg-[#454545] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#807f7f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Cancel

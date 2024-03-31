@@ -50,21 +50,24 @@ const Home = () => {
           <NavBar />
         </div>
         <div className="grow bg-[#FFE6C7]">
-          <header className="bg-[#ffdfb8] shadow">
+          <header className="bg-[#454545] shadow flex">
             <div className="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+              <h1 className="justify-start text-3xl font-bold tracking-tight text-white">
                 Dashboard
               </h1>
             </div>
-          </header>
-          <div>
-            <button
-              onClick={() => setOpen(true)} // Set open to true on button click
-              className="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+            <div>
+              <button
+              onClick={() => setOpen(true)}
+              className="px-5 py-3 mt-5 mr-10 font-bold text-white bg-[#FF6000] rounded-xl hover:bg-[#FFA559] hover:text-black hover:font-bold"
             >
               Create a new Note
             </button>
-            <div>
+            </div>
+            
+          </header>
+          <div>
+            
               <Transition.Root show={open} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={setOpen}>
                   <Transition.Child
@@ -146,11 +149,10 @@ const Home = () => {
                   </div>
                 </Dialog>
               </Transition.Root>
-            </div>
 
             <main>
               <div className="py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                <div className="grid max-w-2xl grid-cols-1 pt-10 mx-auto mt-10 border-t border-gray-200 gap-x-8 gap-y-16 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                <div className="grid max-w-2xl grid-cols-1 mx-auto border-t border-gray-200 gap-x-8 gap-y-10 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                   {notes &&
                     notes.map((note) => (
                       <NoteCard note={note} key={note._id} />

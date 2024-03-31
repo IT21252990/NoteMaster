@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useNotesContext } from "../hooks/useNotesContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Swal from "sweetalert2";
+
 
 const CreateNewNote = ({ open, setOpen, handleCancel }) => {
   const navigate = useNavigate();
@@ -43,6 +45,13 @@ const CreateNewNote = ({ open, setOpen, handleCancel }) => {
       setError(null)
       dispatch({type: 'CREATE_NOTE', payload: json})
       handleCancel();
+       // Display success message using SweetAlert2
+       Swal.fire({
+        icon: "success",
+        title: "Success!",
+        text: "New Note Added successfully",
+        confirmButtonColor: "#FF6000",
+      });
     }
   }
 
@@ -96,7 +105,7 @@ const CreateNewNote = ({ open, setOpen, handleCancel }) => {
           >
             Create Note
           </button>
-          {error && <div className="error">{error}</div>}
+          {error && <div className="font-semibold text-red-600">{error}</div>}
         </div>
         <div>
           <button
